@@ -11,7 +11,7 @@ public class FindSeparatedGraphsApp {
 
     public static void main(String[] args) {
         List<Vector<Integer>> vectors = new ArrayList<>();
-        List<Set<Integer>> lists = new ArrayList<>();
+        List<Set<Integer>> groups = new ArrayList<>();
 
         System.out.println("Enter input: ");
         int n = getInputInt();
@@ -25,17 +25,17 @@ public class FindSeparatedGraphsApp {
         });
 
         vectors.forEach(vector -> {
-            boolean existInGroup = lists.stream().parallel()
+            boolean existInGroup = groups.stream().parallel()
                     .anyMatch(
-                            integers -> integers.contains(vector.get(0)) || integers.contains(vector.get(1))
+                            group -> group.contains(vector.get(0)) || group.contains(vector.get(1))
                     );
 
             if (!existInGroup) {
-                lists.add(new HashSet<>(vector));
+                groups.add(new HashSet<>(vector));
             }
         });
 
         System.out.println("Output: ");
-        System.out.println(lists.size());
+        System.out.println(groups.size());
     }
 }

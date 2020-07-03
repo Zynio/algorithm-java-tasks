@@ -14,14 +14,14 @@ public class FindPairsApp {
         System.out.println("Enter input: ");
         String[] input = InputService.getInputInts();
 
-        List<Integer> sortedList = InputService.validAndGetInputStream(input).sorted().collect(Collectors.toList());
+        List<Integer> numbers = InputService.validAndGetInputStream(input).sorted().collect(Collectors.toList());
 
         System.out.println("Output: ");
 
-        sortedList.forEach(
-                i -> IntStream.range(0,  sortedList.size()).parallel()
-                        .filter(j -> i + sortedList.get(j)== SUM && i < sortedList.get(j))
-                        .forEach(j -> System.out.println(sortedList.get(i) + " " + sortedList.get(j)))
+        numbers.forEach(
+                i -> IntStream.range(0,  numbers.size()).parallel()
+                        .filter(j -> i + numbers.get(j)== SUM && i < numbers.get(j))
+                        .forEach(j -> System.out.println(numbers.get(i) + " " + numbers.get(j)))
                 );
     }
 }

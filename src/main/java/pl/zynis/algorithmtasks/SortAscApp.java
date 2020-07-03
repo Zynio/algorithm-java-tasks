@@ -13,14 +13,14 @@ public class SortAscApp {
     public static void main(String[] args) {
         System.out.println("Enter input");
         String[] input = InputService.getInputInts();
-        Supplier<Stream<Integer>> sortedDistinctList = () -> InputService.validAndGetInputStream(input).parallel().distinct().sorted();
+        Supplier<Stream<Integer>> numbers = () -> InputService.validAndGetInputStream(input).parallel().distinct().sorted();
 
         System.out.println("Output: ");
 
-        System.out.println(Arrays.toString(sortedDistinctList.get().toArray()));
+        System.out.println(Arrays.toString(numbers.get().toArray()));
         System.out.println("count: " + input.length);
-        System.out.println("distinct: " + sortedDistinctList.get().count());
-        System.out.println("min: " + sortedDistinctList.get().min(Comparator.naturalOrder()).orElseThrow(NoSuchElementException::new));
-        System.out.println("max: " + sortedDistinctList.get().max(Comparator.naturalOrder()).orElseThrow(NoSuchElementException::new));
+        System.out.println("distinct: " + numbers.get().count());
+        System.out.println("min: " + numbers.get().min(Comparator.naturalOrder()).orElseThrow(NoSuchElementException::new));
+        System.out.println("max: " + numbers.get().max(Comparator.naturalOrder()).orElseThrow(NoSuchElementException::new));
     }
 }
