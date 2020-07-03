@@ -25,7 +25,7 @@ public class FindSeparatedGraphsApp {
         });
 
         vectors.forEach(vector -> {
-            boolean existInGroup = lists.stream()
+            boolean existInGroup = lists.stream().parallel()
                     .anyMatch(
                             integers -> integers.contains(vector.get(0)) || integers.contains(vector.get(1))
                     );

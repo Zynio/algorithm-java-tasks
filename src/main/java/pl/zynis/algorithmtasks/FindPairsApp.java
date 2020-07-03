@@ -19,7 +19,7 @@ public class FindPairsApp {
         System.out.println("Output: ");
 
         sortedList.forEach(
-                i -> IntStream.range(0,  sortedList.size())
+                i -> IntStream.range(0,  sortedList.size()).parallel()
                         .filter(j -> i + sortedList.get(j)== SUM && i < sortedList.get(j))
                         .forEach(j -> System.out.println(sortedList.get(i) + " " + sortedList.get(j)))
                 );

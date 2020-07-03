@@ -13,7 +13,7 @@ public class SortAscApp {
     public static void main(String[] args) {
         System.out.println("Enter input");
         String[] input = InputService.getInputInts();
-        Supplier<Stream<Integer>> sortedDistinctList = () -> InputService.validAndGetInputStream(input).distinct().sorted();
+        Supplier<Stream<Integer>> sortedDistinctList = () -> InputService.validAndGetInputStream(input).parallel().distinct().sorted();
 
         System.out.println("Output: ");
 
