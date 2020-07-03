@@ -13,7 +13,7 @@ public class FindSeparatedGraphsApp {
         List<Vector<Integer>> vectors = new ArrayList<>();
         List<Set<Integer>> lists = new ArrayList<>();
 
-        System.out.println("Enter n");
+        System.out.println("Enter input: ");
         int n = getInputInt();
 
         IntStream.range(0, n).forEach(i -> {
