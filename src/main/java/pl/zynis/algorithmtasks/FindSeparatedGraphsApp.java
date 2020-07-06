@@ -3,6 +3,7 @@ package pl.zynis.algorithmtasks;
 import pl.zynis.algorithmtasks.services.InputService;
 
 import java.util.*;
+import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 import static pl.zynis.algorithmtasks.services.InputService.getInputInt;
@@ -10,7 +11,6 @@ import static pl.zynis.algorithmtasks.services.InputService.getInputInt;
 public class FindSeparatedGraphsApp {
 
     public static void main(String[] args) {
-        List<Vector<Integer>> vectors = new ArrayList<>();
         List<Set<Integer>> groups = new ArrayList<>();
 
         System.out.println("Enter input: ");
@@ -21,20 +21,25 @@ public class FindSeparatedGraphsApp {
 
             Vector<Integer> vector = new Vector<>();
             InputService.validAndGetInputStream(input).forEach(vector::add);
-            vectors.add(vector);
-        });
 
-        vectors.forEach(vector -> {
-            boolean existInGroup = groups.stream().parallel()
-                    .anyMatch(
-                            group -> group.contains(vector.get(0)) || group.contains(vector.get(1))
-                    );
+            Integer firstElement = vector.get(0);
+            Integer secondElement = vector.get(1);
 
-            if (!existInGroup) {
+            List<Set<Integer>> subGroups = groups.stream()
+                    .filter(integers -> integers.contains(firstElement) || integers.contains(secondElement))
+                    .collect(Collectors.toList());
+
+            if (subGroups.size() == 0) {
                 groups.add(new HashSet<>(vector));
+            } if (subGroups.size() == 1) {
+                subGroups.get(0).add(firstElement);
+                subGroups.get(0).add(secondElement);
+            } if (subGroups.size() == 2) {
+                subGroups.get(0).addAll(subGroups.get(1));
+                groups.remove(subGroups.get(1));
             }
         });
-
+        
         System.out.println("Output: ");
         System.out.println(groups.size());
     }

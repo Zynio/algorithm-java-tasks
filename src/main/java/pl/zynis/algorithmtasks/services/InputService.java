@@ -34,5 +34,4 @@ public class InputService {
     public static String[] getInputInts() {
         return keyboard.nextLine().split(" ");
     }
-
 }
