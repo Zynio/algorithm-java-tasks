@@ -34,9 +34,11 @@ public class FindSeparatedGraphsApp {
             } if (subGroups.size() == 1) {
                 subGroups.get(0).add(firstElement);
                 subGroups.get(0).add(secondElement);
-            } if (subGroups.size() == 2) {
-                subGroups.get(0).addAll(subGroups.get(1));
-                groups.remove(subGroups.get(1));
+            } if (subGroups.size() >= 2) {
+                for (Set<Integer> element : subGroups.subList(1, subGroups.size())) {
+                    subGroups.get(0).addAll(element);
+                    groups.remove(element);
+                }
             }
         });
         
