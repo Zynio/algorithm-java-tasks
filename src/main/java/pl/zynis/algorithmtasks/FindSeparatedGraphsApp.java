@@ -35,6 +35,9 @@ public class FindSeparatedGraphsApp {
                 subGroups.get(0).add(firstElement);
                 subGroups.get(0).add(secondElement);
             } if (subGroups.size() >= 2) {
+                subGroups.get(0).add(firstElement);
+                subGroups.get(0).add(secondElement);
+
                 for (Set<Integer> element : subGroups.subList(1, subGroups.size())) {
                     subGroups.get(0).addAll(element);
                     groups.remove(element);
