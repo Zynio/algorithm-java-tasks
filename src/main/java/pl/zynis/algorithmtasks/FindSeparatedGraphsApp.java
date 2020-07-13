@@ -9,43 +9,61 @@ import java.util.stream.IntStream;
 import static pl.zynis.algorithmtasks.services.InputService.getInputInt;
 
 public class FindSeparatedGraphsApp {
+    private final Map<Integer, Set<Integer>> vertexes = new HashMap<>();
 
-    public static void main(String[] args) {
-        List<Set<Integer>> groups = new ArrayList<>();
+    public void addVertexes(int src, int dest) {
+        if (vertexes.containsKey(src)) {
+            vertexes.get(src).add(dest);
+        } else {
+            vertexes.put(src, new HashSet<>(Collections.singletonList(dest)));
+        }
 
+        if (vertexes.containsKey(dest)) {
+            vertexes.get(dest).add(src);
+        } else {
+            vertexes.put(dest, new HashSet<>(Collections.singletonList(src)));
+        }
+    }
+
+    private void searchTree(int v, Set<Integer> visitedVertex) {
+        visitedVertex.add(v);
+
+        for (int x : vertexes.get(v)) {
+            if (!visitedVertex.contains(x)) {
+                searchTree(x, visitedVertex);
+            }
+        }
+    }
+
+    public int getGraphCount() {
+        int graphCount = 0;
+        Set<Integer> visitedVertex = new HashSet<>();
+
+        for (int v : vertexes.keySet()) {
+            if(!visitedVertex.contains(v)) {
+                graphCount++;
+                searchTree(v, visitedVertex);
+            }
+        }
+
+        return graphCount;
+    }
+
+    public static void main(String[] args){
         System.out.println("Enter input: ");
         int n = getInputInt();
+
+        FindSeparatedGraphsApp app = new FindSeparatedGraphsApp();
 
         IntStream.range(0, n).forEach(i -> {
             String[] input = InputService.getInputInts();
 
-            Vector<Integer> vector = new Vector<>();
-            InputService.validAndGetInputStream(input).forEach(vector::add);
-
-            Integer firstElement = vector.get(0);
-            Integer secondElement = vector.get(1);
-
-            List<Set<Integer>> subGroups = groups.stream()
-                    .filter(integers -> integers.contains(firstElement) || integers.contains(secondElement))
-                    .collect(Collectors.toList());
-
-            if (subGroups.size() == 0) {
-                groups.add(new HashSet<>(vector));
-            } if (subGroups.size() == 1) {
-                subGroups.get(0).add(firstElement);
-                subGroups.get(0).add(secondElement);
-            } if (subGroups.size() >= 2) {
-                subGroups.get(0).add(firstElement);
-                subGroups.get(0).add(secondElement);
-
-                for (Set<Integer> element : subGroups.subList(1, subGroups.size())) {
-                    subGroups.get(0).addAll(element);
-                    groups.remove(element);
-                }
-            }
+            List<Integer> connection = InputService.validAndGetInputStream(input).collect(Collectors.toList());
+            app.addVertexes(connection.get(0), connection.get(1));
         });
-        
+
+
         System.out.println("Output: ");
-        System.out.println(groups.size());
+        System.out.println(app.getGraphCount());
     }
 }
