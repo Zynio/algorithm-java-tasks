@@ -11,17 +11,17 @@ import static pl.zynis.algorithmtasks.services.InputService.getInputInt;
 public class FindSeparatedGraphsApp {
     private final Map<Integer, Set<Integer>> vertexes = new HashMap<>();
 
-    public void addVertexes(int src, int dest) {
-        if (vertexes.containsKey(src)) {
-            vertexes.get(src).add(dest);
+    public void addVertexes(int first, int second) {
+        if (vertexes.containsKey(first)) {
+            vertexes.get(first).add(second);
         } else {
-            vertexes.put(src, new HashSet<>(Collections.singletonList(dest)));
+            vertexes.put(first, new HashSet<>(Collections.singletonList(second)));
         }
 
-        if (vertexes.containsKey(dest)) {
-            vertexes.get(dest).add(src);
+        if (vertexes.containsKey(second)) {
+            vertexes.get(second).add(first);
         } else {
-            vertexes.put(dest, new HashSet<>(Collections.singletonList(src)));
+            vertexes.put(second, new HashSet<>(Collections.singletonList(first)));
         }
     }
 
@@ -40,7 +40,7 @@ public class FindSeparatedGraphsApp {
         Set<Integer> visitedVertex = new HashSet<>();
 
         for (int v : vertexes.keySet()) {
-            if(!visitedVertex.contains(v)) {
+            if (!visitedVertex.contains(v)) {
                 graphCount++;
                 searchTree(v, visitedVertex);
             }
