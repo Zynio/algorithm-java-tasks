@@ -33,4 +33,17 @@ class FindSeparatedGraphsAppTest {
 
         assertEquals(app.getGraphCount(), 3);
     }
+
+    @Test
+    void stackoverflow() {
+        FindSeparatedGraphsApp app = new FindSeparatedGraphsApp();
+
+        for (int i = 0; i < 200000; i++) {
+            app.addVertexes(i + 1, i + 2);
+        }
+
+        app.addVertexes(-2, -6);
+
+        assertEquals(app.getGraphCount(), 2);
+    }
 }

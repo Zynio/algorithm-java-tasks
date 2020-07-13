@@ -25,12 +25,21 @@ public class FindSeparatedGraphsApp {
         }
     }
 
-    private void searchTree(int v, Set<Integer> visitedVertex) {
-        visitedVertex.add(v);
+    private void searchTree(int vertex, Set<Integer> visitedVertex) {
+        Stack<Integer> stack = new Stack<>();
+        stack.push(vertex);
 
-        for (int x : vertexes.get(v)) {
-            if (!visitedVertex.contains(x)) {
-                searchTree(x, visitedVertex);
+        while (!stack.empty()) {
+            vertex = stack.pop();
+
+            if (!visitedVertex.contains(vertex)) {
+                visitedVertex.add(vertex);
+
+                for (int x : vertexes.get(vertex)) {
+                    if (!visitedVertex.contains(x)) {
+                        stack.push(x);
+                    }
+                }
             }
         }
     }
